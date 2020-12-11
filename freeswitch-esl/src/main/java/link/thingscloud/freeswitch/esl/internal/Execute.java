@@ -25,19 +25,39 @@ public abstract class Execute implements IModEslApi {
 //        CommandResponse resp = execute("send_display", message);
 //        return resp != null && resp.isOk();
 //    }
-//
-//    /**
-//     * Answers an incoming call or session.
-//     *
-//     * @see <a href="http://wiki.freeswitch.org/wiki/Misc._Dialplan_Tools_answer">
-//     *     http://wiki.freeswitch.org/wiki/Misc._Dialplan_Tools_answer
-//     *     </a>
-//     */
-//    public boolean answer() {
-//        CommandResponse resp = execute("answer");
-//        return resp != null && resp.isOk();
-//    }
-//
+
+    /**
+     * Answers an incoming call or session.
+     *
+     * @see <a href="http://wiki.freeswitch.org/wiki/Misc._Dialplan_Tools_answer">
+     *     http://wiki.freeswitch.org/wiki/Misc._Dialplan_Tools_answer
+     *     </a>
+     */
+    public boolean answer() {
+        CommandResponse resp = executeApp("answer");
+        return resp != null && resp.isOk();
+    }
+
+    public boolean voicemail(@NotBlank String data) {
+        CommandResponse resp = executeApp("answer");
+        if (resp == null || !resp.isOk())
+            return false;
+        resp = executeApp("voicemail", data);
+        return resp != null && resp.isOk();
+    }
+
+    public boolean rxfax(@NotBlank String data) {
+        CommandResponse resp = executeApp("answer");
+        if (resp == null || !resp.isOk())
+            return false;
+        String stream = "silence_stream://2000";
+        resp = executeApp("playback", stream);
+        if (resp == null || !resp.isOk())
+            return false;
+        resp = executeApp("rxfax", data);
+        return resp != null && resp.isOk();
+    }
+
 //    /**
 //     * Make an attended transfer.
 //     *
@@ -112,6 +132,7 @@ public abstract class Execute implements IModEslApi {
      *     </a>
      */
     public boolean bridge(String endpoint) {
+        System.out.println(endpoint);
         CommandResponse resp = executeApp("bridge", endpoint);
         return resp != null && resp.isOk();
     }
@@ -743,15 +764,15 @@ public abstract class Execute implements IModEslApi {
         String replyText = executeApi("file_exists", file);
         return StringUtils.equalsIgnoreCase("true", replyText);
     }
-//
-//    public String createUUID() {
-//        return StringUtils.trim(getApiReply("create_uuid"));
-//    }
-//
-//    public boolean uuidExists(String uuid) {
-//        String replyText = getApiReply("uuid_exists", uuid);
-//        return StringUtils.equalsIgnoreCase("true", replyText);
-//    }
+
+    public String createUUID() {
+        return StringUtils.trim(executeApi("create_uuid"));
+    }
+
+    public boolean uuidExists(String uuid) {
+        String replyText = executeApi("uuid_exists", uuid);
+        return StringUtils.equalsIgnoreCase("true", replyText);
+    }
 //
 //    public String sendfile(String url, String filePath, String fileName,
 //                           Map<String,String> post, String report, String identifier) {
@@ -798,6 +819,10 @@ public abstract class Execute implements IModEslApi {
 //        CommandResponse resp = execute("luarun", sb.toString());
 //        return resp != null && resp.isOk();
 //    }
+
+    public boolean unsetVar(@NotBlank String name) {
+        return executeApp("unset", name).isOk();
+    }
 
     public boolean uuidSetVar(@NotBlank String uuid,
                               @NotBlank String name,
@@ -1824,20 +1849,21 @@ public abstract class Execute implements IModEslApi {
 //        CommandResponse resp = execute("send_dtmf", sb.toString());
 //        return resp != null && resp.isOk();
 //    }
-//
-//    /**
-//     * Set a channel variable for the channel calling the application.
-//     *
-//     * @param key
-//     *            channel_variable name
-//     * @param value
-//     *            channel_variable value
-//     */
-//    public boolean set(String key, String value) {
-//        CommandResponse resp = execute("set", key + "=" + value);
-//        return resp != null && resp.isOk();
-//    }
-//
+
+    /**
+     * Set a channel variable for the channel calling the application.
+     *
+     * @param key
+     *            channel_variable name
+     * @param value
+     *            channel_variable value
+     */
+    public boolean set(String key, String value) {
+        final String args = key + "=" + value;
+        CommandResponse resp = executeApp("set", args);
+        return resp != null && resp.isOk();
+    }
+
 //    public boolean speak(String engine, String voice, String message) {
 //        String args = engine + "|" + voice + "|" + message;
 //        CommandResponse resp = execute("speak", args);

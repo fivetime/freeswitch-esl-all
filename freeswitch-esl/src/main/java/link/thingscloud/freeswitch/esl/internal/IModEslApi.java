@@ -71,4 +71,8 @@ public interface IModEslApi {
     CommandResponse setLoggingLevel(LoggingLevel level);
 
     CommandResponse cancelLogging();
+
+    CommandResponse setLinger(int seconds);
+
+    CommandResponse setNoLinger();
 }

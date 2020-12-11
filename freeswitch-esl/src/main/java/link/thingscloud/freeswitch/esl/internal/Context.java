@@ -256,10 +256,32 @@ public class Context extends Execute {
      */
     @Override
     public CommandResponse cancelLogging() {
-
         try {
             EslMessage response = handler.sendApiSingleLineCommand(channel, "nolog");
             return new CommandResponse("nolog", response);
+        } catch (Throwable t) {
+            throw new RuntimeException(t);
+        }
+    }
+
+    @Override
+    public CommandResponse setLinger(int seconds) {
+        try {
+            final StringBuilder sb = new StringBuilder();
+            sb.append("linger ").append(seconds);
+
+            EslMessage response = handler.sendApiSingleLineCommand(channel, sb.toString());
+            return new CommandResponse(sb.toString(), response);
+        } catch (Throwable t) {
+            throw new RuntimeException(t);
+        }
+    }
+
+    @Override
+    public CommandResponse setNoLinger() {
+        try {
+            EslMessage response = handler.sendApiSingleLineCommand(channel, "nolinger");
+            return new CommandResponse("nolinger", response);
         } catch (Throwable t) {
             throw new RuntimeException(t);
         }
