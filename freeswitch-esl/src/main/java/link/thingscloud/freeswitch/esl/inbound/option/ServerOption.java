@@ -37,8 +37,8 @@ import java.util.List;
 @Data
 @Accessors(fluent = true)
 public class ServerOption {
-    private final String host;
-    private final int port;
+    private String host;
+    private int port;
     private String password;
     private int timeoutSeconds;
     private int connectTimes = 0;
@@ -82,7 +82,7 @@ public class ServerOption {
 
         List<String> list = new ArrayList<>();
         for (String addEvent : addEvents) {
-            if (!events().contains(addEvent)) {
+            if (!events.contains(addEvent)) {
                 list.add(addEvent);
             }
         }
