@@ -37,8 +37,8 @@ import java.util.List;
 @Data
 @Accessors(fluent = true)
 public class ServerOption {
-    private String host;
-    private int port;
+    private final String host;
+    private final int port;
     private String password;
     private int timeoutSeconds;
     private int connectTimes = 0;
