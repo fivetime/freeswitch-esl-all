@@ -7,9 +7,9 @@
 
     <groupId>link.thingscloud</groupId>
     <artifactId>freeswitch-esl-all</artifactId>
-    <version>1.2.9</version>
+    <version>1.2.9-SNAPSHOT</version>
 
-    <name>freeswitch-esl-all-${project.version}</name>
+    <name>freeswitch-esl-all</name>
     <description>freeswitch event socket library on netty</description>
     <url>https://github.com/fivetime/freeswitch-esl-all</url>
 
@@ -27,6 +27,41 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>maven-releases</id>
+            <name>Releases</name>
+            <url>https://nexus.fivetime.llc/repository/maven-releases/</url>
+        </repository>
+        <repository>
+            <id>maven-snapshots</id>
+            <name>Snapshot</name>
+            <url>https://nexus.fivetime.llc/repository/maven-snapshots/</url>
+        </repository>
+        <repository>
+            <id>spring-releases</id>
+            <name>Spring Releases</name>
+            <url>https://repo.spring.io/release</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>maven-releases</id>
+            <name>Releases</name>
+            <url>https://nexus.fivetime.llc/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>maven-snapshots</id>
+            <name>Snapshot</name>
+            <url>https://nexus.fivetime.llc/repository/maven-snapshots/</url>
+            <uniqueVersion>false</uniqueVersion>
+        </snapshotRepository>
+    </distributionManagement>
 
     <dependencyManagement>
         <dependencies>
