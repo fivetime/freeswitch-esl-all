@@ -22,13 +22,21 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <spring.boot.version>2.3.7.RELEASE</spring.boot.version>
+        <spring.boot.version>2.4.2</spring.boot.version>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <repositories>
+        <repository>
+            <id>spring-releases</id>
+            <name>Spring Releases</name>
+            <url>https://repo.spring.io/release</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
         <repository>
             <id>maven-releases</id>
             <name>Releases</name>
@@ -38,14 +46,6 @@
             <id>maven-snapshots</id>
             <name>Snapshot</name>
             <url>https://nexus.fivetime.llc/repository/maven-snapshots/</url>
-        </repository>
-        <repository>
-            <id>spring-releases</id>
-            <name>Spring Releases</name>
-            <url>https://repo.spring.io/release</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
         </repository>
     </repositories>
 
